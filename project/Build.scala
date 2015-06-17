@@ -19,22 +19,22 @@ object BuildSettings {
 
 object Resolvers {
   val typesafeSnapshot  = "Typesafe Snapshots Repository" at "http://repo.typesafe.com/typesafe/snapshots/"
-  val sprayRepo = "Spray Repo" at "http://repo.spray.io"
+  val sprayRepo = "Spray repository" at "http://repo.spray.io"
 }
 
 object Dependencies {
-  lazy val jodatime    = "joda-time" % "joda-time" % "2.+" % "compile"
-  lazy val jodaconvert    = "org.joda" % "joda-convert" % "1.+" % "compile"
-  //lazy val scalaz       = "org.scalaz" %% "scalaz-core" % "7.1.+" % "provided"
+  lazy val jodatime    = "joda-time" % "joda-time" % "2.+"
+  lazy val jodaconvert    = "org.joda" % "joda-convert" % "1.+"
+  //lazy val scalaz       = "org.scalaz" %% "scalaz-core" % "7.1.+"
 
-  lazy val akka_actor  = "com.typesafe.akka" %% "akka-actor" % BuildSettings.akkaVersion % "provided"
+  lazy val akka_actor  = "com.typesafe.akka" %% "akka-actor" % BuildSettings.akkaVersion
 
-  lazy val spray_routing = "io.spray" %% "spray-routing" % BuildSettings.sprayVersion % "provided"
+  lazy val spray_routing = "io.spray" %% "spray-routing" % BuildSettings.sprayVersion
   lazy val spray_testkit =  "io.spray" %% "spray-testkit" % BuildSettings.sprayVersion % "test"
-  lazy val spray_httpx = "io.spray" %% "spray-httpx" % BuildSettings.sprayVersion % "provided"
-  lazy val spray_can = "io.spray" %% "spray-can" % BuildSettings.sprayVersion % "provided"
+  lazy val spray_httpx = "io.spray" %% "spray-httpx" % BuildSettings.sprayVersion
+  lazy val spray_can = "io.spray" %% "spray-can" % BuildSettings.sprayVersion
 
-  lazy val typesafe_config = "com.typesafe" % "config" % "1.2.+" % "provided"
+  lazy val typesafe_config = "com.typesafe" % "config" % "1.2.+"
 
   lazy val scalatest = "org.scalatest" %% "scalatest" % BuildSettings.scalatestVersion % "test"
   lazy val akka_testkit = "com.typesafe.akka" %% "akka-testkit" % BuildSettings.akkaVersion % "test"

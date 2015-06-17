@@ -5,16 +5,18 @@ import com.typesafe.config.Config
 import spray.can.Http
 import common.Problem
 
-class SandboxServer(config: Config) extends Actor {
-  import httpServer.SandboxServer._
+class SandboxServer(config: Config)(implicit val system: ActorSystem) extends Actor {
+  import SandboxServer._
 
-  private val host = ???
-  private val port = ???
+  private val host = config.getString("host")
+  private val port = config.getInt("port")
+
+  private val httpServer = system.actorOf(HttpServer.props(config))
 
   override def receive: Receive = initialize
   
   def initialize: Receive = {
-    case Start => akka.io.IO(Http) ! Http.Bind(listener, interface = host, port = port)
+    case Start => akka.io.IO(Http) ! Http.Bind(httpServer, interface = host, port = port)
   }
 
   def running: Receive = {
@@ -24,7 +26,7 @@ class SandboxServer(config: Config) extends Actor {
 }
 
 object SandboxServer {
-  def props(config: Config): Props = {
+  def props(config: Config)(implicit system: ActorSystem): Props = {
     Props(new SandboxServer(config))
   }
 

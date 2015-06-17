@@ -1,28 +1,30 @@
 package httpServer
 
 import akka.actor._
-import common.Problem
+import com.typesafe.config.Config
+import spray.routing._
+import spray.http.MediaTypes._
 
-class HttpServer extends Actor {
-  import httpServer.HttpServer._
+class HttpServer(config: Config)(implicit val system: ActorSystem)
+  extends Actor
+  with ActorLogging
+  with HttpService {
+  override def receive: Receive = runRoute(dummy)
 
-  override def receive: Receive = initialize
+  override implicit def actorRefFactory: ActorRefFactory = context
 
-  def initialize: Receive = {
-    case Start => ???
-    case Stop => ???
+  private val dummy = path("dummy") {
+    get {
+      complete {
+        <p>Well done dude! It's running</p>
+      }
+    }
   }
 }
 
+
 object HttpServer {
-  sealed trait HttpServerMsg
-  sealed trait HttpServerMsgRsp
-
-  case object Start extends HttpServerMsg
-  case object Started extends HttpServerMsgRsp
-  final case class StartFailed(problem: Problem) extends HttpServerMsgRsp
-
-  case object Stop extends HttpServerMsg
-  case object Stopped extends HttpServerMsgRsp
-  case class StopFailed(problem: Problem) extends HttpServerMsgRsp
+  def props(config: Config)(implicit system: ActorSystem): Props = {
+    Props(new HttpServer(config))
+  }
 }

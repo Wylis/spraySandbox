@@ -47,6 +47,8 @@ trait CommonBuild {
   def commonProject(name: String, baseFile: java.io.File) =
     Project(id = name, base = baseFile, settings = BuildSettings.buildSettings).settings(
       libraryDependencies += akka_actor,
+      libraryDependencies += spray_routing,
+      libraryDependencies += spray_can,
       libraryDependencies += jodatime,
       libraryDependencies += jodaconvert,
       libraryDependencies += typesafe_config,
